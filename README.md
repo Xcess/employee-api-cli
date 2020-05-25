@@ -27,9 +27,15 @@ Install all dependencies:
 
     poetry install
 
-   Run it:
+Run it:
 
     poetry run python main.py
+
+You can also build a docker image using the specified Dockerfile
+
+    docker build -t employee_api:0.1.0 .
+    docker run --rm -it employee_api:0.1.0
+
 To run the tests, install dev dependencies and run tests like this:
 
     poetry install --dev

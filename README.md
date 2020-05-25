@@ -3,22 +3,24 @@ I did three takes on this challenge mainly because all of them look reasonable t
 
 
 ---
-*The sysadmin take:*
+*sysadmin take*
 
 
 Age Average:
+
 ```curl http://dummy.restapiexample.com/api/v1/employees --silent | jq -r '.data[].employee_age' | awk '{ total += $1; count++ } END { print total/count }'```
 
 Salary Average:
+
 ```curl http://dummy.restapiexample.com/api/v1/employees --silent | jq -r '.data[].employee_salary' | awk '{ total += $1; count++ } END { print total/count }'```
 
 ---
-*The data scientist take*
+*data science take*
 
 View on [Google Colab](https://colab.research.google.com/drive/1hZUZMWFcegC30An-38opYdhtzKjaWWG4?usp=sharing)
 
 ---
-*The developer take*
+*developer take*
 
 The code resides in this repo. 
 To run the code it's best to use [poetry](https://python-poetry.org/)
@@ -30,6 +32,9 @@ Install all dependencies:
 Run it:
 
     poetry run python main.py
+To view help use -h flag:
+
+    poetry run python main.py -h
 
 You can also build a docker image using the specified Dockerfile
 

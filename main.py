@@ -15,7 +15,7 @@ def _init():
         "-u",
         "--url",
         default="http://dummy.restapiexample.com/api/v1/employees",
-        help="API URL. (Should be compatible with the original employee API",
+        help="API URL. Should be compatible with the original employee API",
     )
     parser.add_argument(
         "-a",

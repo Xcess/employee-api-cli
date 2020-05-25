@@ -1,8 +1,10 @@
-from helper import Employee, EmployeesAPI, GetChar, TerminalColors
+from lib.termcolor import TerminalColors
+from lib.employee import Employee
+from lib.api import JSONApi
 import argparse
 
 
-def main():
+def _init():
     parser = argparse.ArgumentParser(
         description="Fetches data from employee API and displays some stats"
     )
@@ -15,13 +17,30 @@ def main():
         default="http://dummy.restapiexample.com/api/v1/employees",
         help="API URL. (Should be compatible with the original employee API",
     )
+    parser.add_argument(
+        "-a",
+        "--show-employees",
+        action="store_true",
+        help="Show all employees (Disables interactive mode).",
+    )
     args = parser.parse_args()
 
     terminal_colors = TerminalColors()
     if args.no_color:
         terminal_colors.disable()
 
-    api_handler = EmployeesAPI()
+    return args, terminal_colors
+
+
+def show_employees(employees):
+    for e in employees:
+        print(e)
+
+
+def main():
+    args, terminal_colors = _init()
+
+    api_handler = JSONApi()
     employees_json = api_handler.get_json(args.url)
 
     employees = []
@@ -51,11 +70,15 @@ def main():
         f"Average employee salary: {terminal_colors.RED}{average_salary:.2f}{terminal_colors.ENDC}\n"
     )
 
+    if args.show_employees:
+        show_employees(employees)
+        return
+
     print(
-        f"{terminal_colors.BLUE}To see all employees press 'y' ...\n{terminal_colors.ENDC}"
+        f"{terminal_colors.BLUE}To see all employees enter 'y' otherwise press enter to exit ...\n{terminal_colors.ENDC}"
     )
 
-    if GetChar().lower() == "y":
+    if input().lower() == "y":
         for e in employees:
             print(e)
 
